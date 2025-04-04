@@ -4,7 +4,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _moveSpeed = 8f;
+    [SerializeField] private float _lateralMoveSpeed = 10f;
     [SerializeField] private Button _leftButton;
     [SerializeField] private Button _rightButton;
 
@@ -72,15 +73,18 @@ public class PlayerController : MonoBehaviour
         // Update Horizontal Position.
         if (_horizontalPosition == -1)
         {
-            _rb.position = new Vector3(_leftPosX, _rb.position.y, _rb.position.z);
+            Vector3 newPos = new Vector3(_leftPosX, _rb.position.y, _rb.position.z);
+            _rb.position = Vector3.Lerp(_rb.position, newPos, Time.fixedDeltaTime * _lateralMoveSpeed);
         }
         else if (_horizontalPosition == 1)
         {
-            _rb.position = new Vector3(_rightPosX, _rb.position.y, _rb.position.z);
+            Vector3 newPos = new Vector3(_rightPosX, _rb.position.y, _rb.position.z);
+            _rb.position = Vector3.Lerp(_rb.position,newPos, Time.fixedDeltaTime * _lateralMoveSpeed);
         }
         else
         {
-            _rb.position = new Vector3(0, _rb.position.y, _rb.position.z);
+            Vector3 newPos = new Vector3(0, _rb.position.y, _rb.position.z);
+            _rb.position = Vector3.Lerp(_rb.position, newPos, Time.fixedDeltaTime * _lateralMoveSpeed);
         }
     }
 }
