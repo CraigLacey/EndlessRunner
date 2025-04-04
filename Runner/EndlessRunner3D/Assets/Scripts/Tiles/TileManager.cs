@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TileManager : MonoBehaviour
@@ -5,6 +6,8 @@ public class TileManager : MonoBehaviour
     [SerializeField] private TileGenerator _leftTileGenerator;
     [SerializeField] private TileGenerator _pathTileGenerator;
     [SerializeField] private TileGenerator _rightTileGenerator;
+
+    WaitForSeconds _tileGenerationDelay = new WaitForSeconds(0.5f);
 
     public void Initialize()
     {
@@ -17,13 +20,19 @@ public class TileManager : MonoBehaviour
 
     private void HandlePlayerTileExit()
     {
+        StartCoroutine(GenerateTilesAsync());
+    }
+
+    public void PopulateTiles()
+    {
+        _pathTileGenerator.SpawnCollectibles();
+    }
+
+    private IEnumerator GenerateTilesAsync()
+    {
+        yield return _tileGenerationDelay;
         _leftTileGenerator.GenerateNextTile();
         _pathTileGenerator.GenerateNextTile();
         _rightTileGenerator.GenerateNextTile();
-    }
-
-    internal void PopulateTiles()
-    {
-        _pathTileGenerator.SpawnCollectibles();
     }
 }

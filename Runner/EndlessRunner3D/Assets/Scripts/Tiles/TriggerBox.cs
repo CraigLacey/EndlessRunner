@@ -10,6 +10,11 @@ public class TriggerBox : MonoBehaviour
         PlayerExit += onTileExit;
     }
 
+    private void OnDestroy()
+    {
+        PlayerExit = null;
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
