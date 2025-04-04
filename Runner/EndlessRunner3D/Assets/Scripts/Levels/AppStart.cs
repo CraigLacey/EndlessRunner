@@ -1,9 +1,8 @@
-using UnityEditor;
 using UnityEngine;
 
 public class AppStart : MonoBehaviour
 {
-    [SerializeField] private SceneAsset _sceneToLoad;
+    [SerializeField] private int _sceneToLoad;
 
     private void Start()
     {
@@ -14,13 +13,9 @@ public class AppStart : MonoBehaviour
     private void Initialize()
     {
         Debug.Log("AppStart -> Initializing");
-        if (_sceneToLoad == null)
-        {
-            Debug.LogError("Scene To Load not found, check inspector");
-            return;
-        }
 
-        Debug.Log($"Loading Scene: {_sceneToLoad.name}");
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneToLoad.name);
+        Debug.Log($"Loading Scene: {_sceneToLoad}");
+        
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneToLoad);
     }
 }

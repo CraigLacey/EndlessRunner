@@ -1,66 +1,86 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float _moveSpeed = 5f;
-    [SerializeField] float _jumpForce = 7f;
+    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private Button _leftButton;
+    [SerializeField] private Button _rightButton;
+
+    // This variable is used to track the player's horizontal position
+    // 0 = center
+    // -1 = left
+    // 1 = right
+    private int _horizontalPosition = 0;
+    private float _leftPosX = -2.5f;
+    private float _rightPosX = 2.5f;
 
     private Rigidbody _rb;
-    private bool _initialized = false;
-    private float _horizontalInput;
+    private bool _isRunning = false;
 
     public void Initialize()
     {
         Debug.Log($"{nameof(PlayerController)} Initializing ...");
 
         _rb = GetComponent<Rigidbody>();
-        _initialized = true;
+        _leftButton.onClick.AddListener(MoveLeft);
+        _rightButton.onClick.AddListener(MoveRight);
 
         Debug.Log($"{nameof(PlayerController)} Initialized");
     }
 
-    void Update()
+    public void MoveLeft()
     {
-        if (!_initialized) { return; }
-
-        // Get horizontal input from touch
-        _horizontalInput = 0f;
-
-        if (Input.touchCount > 0)
+        _horizontalPosition -= 1;
+        if (_horizontalPosition < -1)
         {
-            Touch touch = Input.GetTouch(0);
-            if (touch.position.x < Screen.width / 2)
-            {
-                _horizontalInput = -1f; // Move left
-            }
-            else
-            {
-                _horizontalInput = 1f; // Move right
-            }
+            _horizontalPosition = -1;
         }
     }
 
-    void FixedUpdate()
+    public void MoveRight()
     {
+        _horizontalPosition += 1;
+        if (_horizontalPosition > 1)
+        {
+            _horizontalPosition = 1;
+        }
+    }
+
+    internal void StartRunning()
+    {
+        _isRunning = true;
+    }
+
+    internal void StopRunning()
+    {
+        _isRunning = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!_isRunning)
+        {
+            return;
+        }
+
         // Forward movement (automatic)
         Vector3 forwardMovement = Vector3.forward * _moveSpeed * Time.fixedDeltaTime;
         _rb.MovePosition(_rb.position + forwardMovement);
 
-        // Horizontal movement (physics-based)
-        Vector3 horizontalMovement = Vector3.right * _horizontalInput * _moveSpeed * Time.fixedDeltaTime;
-        _rb.MovePosition(_rb.position + horizontalMovement);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //if (collision.gameObject.CompareTag("Ground"))
-        //{
-        //    _isGrounded = true;
-        //}
-        //else if (collision.gameObject.CompareTag("Obstacle"))
-        //{
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //}
+        // Update Horizontal Position.
+        if (_horizontalPosition == -1)
+        {
+            _rb.position = new Vector3(_leftPosX, _rb.position.y, _rb.position.z);
+        }
+        else if (_horizontalPosition == 1)
+        {
+            _rb.position = new Vector3(_rightPosX, _rb.position.y, _rb.position.z);
+        }
+        else
+        {
+            _rb.position = new Vector3(0, _rb.position.y, _rb.position.z);
+        }
     }
 }

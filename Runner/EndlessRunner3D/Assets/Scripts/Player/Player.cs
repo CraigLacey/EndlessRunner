@@ -12,4 +12,18 @@ public class Player : MonoBehaviour
 
         Debug.Log($"{nameof(Player)} Initialized");
     }
+
+    internal void StartRunning()
+    {
+        _playerController.StartRunning();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Collectible"))
+        {
+            Debug.Log($"{nameof(Player)} -> Collected an item!");
+            other.GetComponent<Collectible>().Collect();
+        }
+    }
 }
