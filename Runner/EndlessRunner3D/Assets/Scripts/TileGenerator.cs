@@ -37,13 +37,14 @@ public class TileGenerator : MonoBehaviour
         _nextTilePosition += _tileOffsetZ;
         _currentTileIndex = (_currentTileIndex + 1) % _tiles.Count;
 
+        // Populate the tile with items after moving it to it's new position
         if (t != null)
         {
             t.SpawnItem();
         }
     }
 
-    public void SpawnCollectibles()
+    public void SpawnItems()
     {
         foreach (var tileObj in _tiles)
         {

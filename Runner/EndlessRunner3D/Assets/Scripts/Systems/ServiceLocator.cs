@@ -28,7 +28,18 @@ public static class ServiceLocator
         }
 
         _serviceMap.Add(typeof(T), service);
+    }
 
+    /// <summary>
+    /// Deregister an object in the service map
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static void Deregister<T>()
+    {
+        if(_serviceMap.ContainsKey(typeof(T)))
+        {
+            _serviceMap.Remove(typeof(T));
+        }
     }
 
 
@@ -46,6 +57,18 @@ public static class ServiceLocator
         }
 
         _serviceMap.Add(serviceType, service);
+    }
+
+    /// <summary>
+    /// Deregister an object using a given System.Type
+    /// </summary>
+    /// <param name="serviceType"></param>
+    public static void Deregister(Type serviceType)
+    {
+        if (_serviceMap.ContainsKey(serviceType))
+        {
+            _serviceMap.Remove(serviceType);
+        }
     }
 
     /// <summary>

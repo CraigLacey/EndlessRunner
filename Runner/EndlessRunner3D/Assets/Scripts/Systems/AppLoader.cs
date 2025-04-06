@@ -2,8 +2,23 @@ using UnityEngine;
 
 public class AppLoader : SystemLoader
 {
-    private void Awake()
+    public static Transform SystemRoot => _transform;
+    private static Transform _transform;
+
+    private static AppLoader _instance;
+
+    private async void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            // Duplicate loader detected
+            gameObject.SetActive(false);
+            return;
+        }
+        _instance = this;
+        _transform = transform;
+        DontDestroyOnLoad(gameObject);
+
         // Clear any statics that may have been held between Playmode sessions.
         ClearStatics();
 
@@ -14,7 +29,7 @@ public class AppLoader : SystemLoader
         RegisterTasks();
 
         // Run tasks that have been registered.
-        RunTasks();
+        await RunTasks();
     }
 
     private void ClearStatics()
@@ -30,5 +45,8 @@ public class AppLoader : SystemLoader
     private void RegisterTasks()
     {
         Debug.Log("Register Tasks");
+
+        ObjectPoolManager _objectPoolManager = transform.GetComponentInChildren<ObjectPoolManager>();
+        AddTask(_objectPoolManager.InitializePoolAsync);
     }
 }

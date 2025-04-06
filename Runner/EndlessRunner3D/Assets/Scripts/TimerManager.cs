@@ -7,6 +7,7 @@ public class TimerManager : MonoBehaviour
 
     private bool _timerRunning = false;
     private float _startTime;
+    private float _elapsedTime = 0f;
 
     public void Initialize()
     {
@@ -19,8 +20,8 @@ public class TimerManager : MonoBehaviour
     {
         if (_timerRunning)
         {
-            float elapsedTime = Time.time - _startTime;
-            UpdateTimerText(elapsedTime);
+            _elapsedTime = Time.time - _startTime;
+            UpdateTimerText();
         }
     }
 
@@ -43,11 +44,20 @@ public class TimerManager : MonoBehaviour
         _timerRunning = true;
     }
 
-    private void UpdateTimerText(float elapsedTime)
+    public string GetTime()
     {
-        int minutes = Mathf.FloorToInt(elapsedTime / 60);
-        int seconds = Mathf.FloorToInt(elapsedTime % 60);
-        int milliseconds = Mathf.FloorToInt((elapsedTime * 1000) % 1000);
+        int minutes = Mathf.FloorToInt(_elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(_elapsedTime % 60);
+        int milliseconds = Mathf.FloorToInt((_elapsedTime * 1000) % 1000);
+        string timeText = string.Format("{0:000}m:{1:00}s:{2:000}ms", minutes, seconds, milliseconds);
+        return timeText;
+    }
+
+    private void UpdateTimerText()
+    {
+        int minutes = Mathf.FloorToInt(_elapsedTime / 60);
+        int seconds = Mathf.FloorToInt(_elapsedTime % 60);
+        int milliseconds = Mathf.FloorToInt((_elapsedTime * 1000) % 1000);
         _timerText.text = string.Format("Time: {0:000}m:{1:00}s:{2:000}ms", minutes, seconds, milliseconds);
     }
 }

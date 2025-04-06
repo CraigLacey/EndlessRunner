@@ -25,7 +25,9 @@ public class TileManager : MonoBehaviour
 
     public void PopulateTiles()
     {
-        _pathTileGenerator.SpawnCollectibles();
+        _leftTileGenerator.SpawnItems();
+        _pathTileGenerator.SpawnItems();
+        _rightTileGenerator.SpawnItems();
     }
 
     private IEnumerator GenerateTilesAsync()

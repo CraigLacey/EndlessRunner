@@ -25,7 +25,7 @@ public class SystemLoader : MonoBehaviour
     /// <summary>
     /// Run all tasks in the queue sequentially.
     /// </summary>
-    public async void RunTasks()
+    public async Task RunTasks()
     {
         if (_taskQueue.Count != 0)
         {

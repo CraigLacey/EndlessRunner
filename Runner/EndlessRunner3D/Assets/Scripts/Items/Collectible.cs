@@ -8,11 +8,15 @@ public class Collectible : MonoBehaviour
     [SerializeField] private float _bounceSpeed = 2f;
 
     private ScoreManager _scoreManager;
+    private CollectibleManager _collectibleManager;
+
+    public bool Initialized => _initialized;
     private bool _initialized = false;
 
-    private void Awake()
+    public void Initialize()
     {
         _scoreManager = ServiceLocator.Get<ScoreManager>();
+        _collectibleManager = ServiceLocator.Get<CollectibleManager>();
         _initialized = true;
     }
 
@@ -41,8 +45,6 @@ public class Collectible : MonoBehaviour
         // Add the collectible to the player's inventory or score
         Debug.Log($"{nameof(Collectible)} -> Collected!");
         _scoreManager.UpdateScore(_scoreValue);
-
-        // Destroy the collectible object
-        Destroy(gameObject);
+        _collectibleManager.RecycleCollectible(gameObject);
     }
 }

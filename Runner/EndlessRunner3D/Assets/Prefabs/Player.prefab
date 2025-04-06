@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6766854655967555178}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,7 +81,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
@@ -111,7 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94226cc0829870146bdec0b93bf1c86f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _moveSpeed: 10
+  _lateralMoveSpeed: 12
+  _leftButton: {fileID: 0}
+  _rightButton: {fileID: 0}
 --- !u!1 &7310957449883996565
 GameObject:
   m_ObjectHideFlags: 0
