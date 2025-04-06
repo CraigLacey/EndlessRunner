@@ -111,7 +111,7 @@ PrefabInstance:
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
@@ -121,11 +121,16 @@ PrefabInstance:
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[1].name
-      value: Tree
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[2].name
+      value: Tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
+      propertyPath: objectsToPool.Array.data[3].name
       value: Shrub
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
@@ -138,18 +143,24 @@ PrefabInstance:
         type: 3}
       propertyPath: objectsToPool.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 4848227947619358604, guid: 9178a5ae6d3653a4fa83cb1b115f418c,
+      objectReference: {fileID: 4079107134699432806, guid: 5cf7f884f8931c84ca912e4a79405bf0,
         type: 3}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 4848227947619358604, guid: 9178a5ae6d3653a4fa83cb1b115f418c,
+        type: 3}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
+      propertyPath: objectsToPool.Array.data[3].prefab
       value: 
       objectReference: {fileID: 3164609654860450312, guid: b3d39e03ac62e4348a60a6a4bb8d00c0,
         type: 3}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[0].poolSize
-      value: 12
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
@@ -159,6 +170,11 @@ PrefabInstance:
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[2].poolSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
+      propertyPath: objectsToPool.Array.data[3].poolSize
       value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []

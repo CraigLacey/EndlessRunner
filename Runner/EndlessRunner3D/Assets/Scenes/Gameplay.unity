@@ -4512,49 +4512,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AppLoader
       objectReference: {fileID: 0}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[1].name
-      value: Obstacle
-      objectReference: {fileID: 0}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[2].name
-      value: Tree
-      objectReference: {fileID: 0}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[3].name
-      value: Shrub
-      objectReference: {fileID: 0}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[1].prefab
-      value: 
-      objectReference: {fileID: 4079107134699432806, guid: 5cf7f884f8931c84ca912e4a79405bf0,
-        type: 3}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[2].prefab
-      value: 
-      objectReference: {fileID: 4848227947619358604, guid: 9178a5ae6d3653a4fa83cb1b115f418c,
-        type: 3}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[3].prefab
-      value: 
-      objectReference: {fileID: 3164609654860450312, guid: b3d39e03ac62e4348a60a6a4bb8d00c0,
-        type: 3}
-    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
-        type: 3}
-      propertyPath: objectsToPool.Array.data[3].poolSize
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

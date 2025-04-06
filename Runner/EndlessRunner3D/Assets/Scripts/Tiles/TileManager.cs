@@ -7,7 +7,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private TileGenerator _pathTileGenerator;
     [SerializeField] private TileGenerator _rightTileGenerator;
 
-    WaitForSeconds _tileGenerationDelay = new WaitForSeconds(0.5f);
+    WaitForSeconds _tileGenerationDelay = new WaitForSeconds(0.25f);
 
     public void Initialize()
     {
