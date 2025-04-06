@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,7 +17,8 @@ public class ObjectPoolManager : MonoBehaviour
 
     public bool IsInitialized => _isInitialized;
     private bool _isInitialized = false;
-    private readonly Dictionary<string, List<GameObject>> _objectPoolByName = new Dictionary<string, List<GameObject>>();
+    private readonly Dictionary<string, ConcurrentQueue<GameObject>> _objectPoolByName = new();
+    private static readonly object s_queueLock = new();
 
     public Task InitializePoolAsync()
     {
@@ -29,13 +31,16 @@ public class ObjectPoolManager : MonoBehaviour
                 Debug.Log($"Creating Pool: {poolObj.name} Size: {poolObj.poolSize}");
                 GameObject poolGO = new GameObject(poolObj.name);
                 poolGO.transform.SetParent(PoolManagerGO.transform);
-                _objectPoolByName.Add(poolObj.name, new List<GameObject>());
+                _objectPoolByName.Add(poolObj.name, new ConcurrentQueue<GameObject>());
                 for (int i = 0; i < poolObj.poolSize; ++i)
                 {
                     GameObject go = Instantiate(poolObj.prefab, poolGO.transform, true);
                     go.name = $"{poolObj.name}_{_objectPoolByName[poolObj.name].Count:000}";
                     go.SetActive(false);
-                    _objectPoolByName[poolObj.name].Add(go);
+                    lock (s_queueLock)
+                    {
+                        _objectPoolByName[poolObj.name].Enqueue(go);
+                    }
                 }
             }
             else
@@ -67,40 +72,46 @@ public class ObjectPoolManager : MonoBehaviour
 
     public void DeactivateObjects()
     {
-        foreach (var pool in _objectPoolByName.Values)
+        lock (s_queueLock)
         {
-            for (int i = 0; i < pool.Count; i++)
+            foreach (var pool in _objectPoolByName.Values)
             {
-                pool[i].SetActive(false);
+                int poolSize = pool.Count;
+                for (int i = 0; i < poolSize; ++i)
+                {
+                    pool.TryDequeue(out GameObject go);
+                    if (go != null && go.activeInHierarchy)
+                    {
+                        go.SetActive(false);
+                        pool.Enqueue(go);
+                    }
+                }
             }
         }
     }
 
-    public void RecycleObject(GameObject go)
+    public void RecycleObject(GameObject go, string poolName)
     {
-        go.SetActive(false);
+        lock (s_queueLock)
+        {
+            go.SetActive(false);
+            _objectPoolByName[poolName].Enqueue(go);
+        }
     }
 
     private GameObject GetNextObject(string poolName)
     {
-        List<GameObject> pooledObjects = _objectPoolByName[poolName];
-        foreach (GameObject go in pooledObjects)
+        lock (s_queueLock)
         {
-            if (go == null)
+            ConcurrentQueue<GameObject> pooledObjects = _objectPoolByName[poolName];
+            if (pooledObjects.Count > 0)
             {
-                Debug.LogError("Pooled Object Is NULL");
-                continue;
+                pooledObjects.TryDequeue(out GameObject go);
+                return go;
             }
 
-            if (go.activeInHierarchy)
-            {
-                continue; // keep looking
-            }
-
-            return go;
+            Debug.LogError($"{poolName} Object Pool Depleted: No Unused Objects To Return");
+            return null;
         }
-
-        Debug.LogError("Object Pool Depleted: No Unused Objects To Return");
-        return null;
     }
 }

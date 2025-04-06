@@ -33,6 +33,6 @@ public class CollectibleManager : MonoBehaviour
 
     public void RecycleCollectible(GameObject collectible)
     {
-        _objectPoolManager.RecycleObject(collectible);
+        _objectPoolManager.RecycleObject(collectible, CollectiblePoolName);
     }
 }

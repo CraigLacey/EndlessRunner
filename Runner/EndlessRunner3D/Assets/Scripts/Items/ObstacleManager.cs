@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
@@ -36,5 +37,10 @@ public class ObstacleManager : MonoBehaviour
             Debug.LogError($"Failed to spawn obstacle: {nameof(obstacleGO)} is null");
             return null;
         }
+    }
+
+    internal void RecycleObstacle(GameObject itemGO)
+    {
+        _objectPoolManager.RecycleObject(itemGO, ObstaclePoolName);
     }
 }

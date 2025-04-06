@@ -12,7 +12,20 @@ public class Tile : MonoBehaviour
     [SerializeField] private ETileType _tileType = ETileType.None;
     [SerializeField] private TriggerBox _triggerBox;
 
-    private GameObject _tileItem;
+    public enum EItemType
+    {
+        None = 0,
+        Collectible = 1,
+        Obstacle = 2,
+        Prop = 3,
+    }
+    private struct TileItem
+    {
+        public GameObject ItemGO;
+        public EItemType ItemType;
+    }
+
+    private TileItem _tileItem;
     private Action TileExit;
     private CollectibleManager _collectibleManager;
     private ObstacleManager _obstacleManager;
@@ -47,7 +60,23 @@ public class Tile : MonoBehaviour
 
     private void HandleTileExit()
     {
-        _collectibleManager.RecycleCollectible(_tileItem);
+        switch(_tileItem.ItemType)
+        {
+            case EItemType.Collectible:
+                // If the collectible is active, recycle it
+                if (_tileItem.ItemGO.activeInHierarchy)
+                {
+                    _collectibleManager.RecycleCollectible(_tileItem.ItemGO);    
+                }
+                break;
+            case EItemType.Obstacle:
+                _obstacleManager.RecycleObstacle(_tileItem.ItemGO);
+                break;
+            default:
+                Debug.Log($"HandleTileExit for unhandled ItemType {_tileItem.ItemType}");
+                break;
+        }
+
         TileExit?.Invoke();
     }
 
@@ -65,7 +94,7 @@ public class Tile : MonoBehaviour
             SpawnCollectible();
         }
 
-        if(_tileItem == null)
+        if(_tileItem.ItemGO == null)
         {
             Debug.Log("SpawnItem failed: _tileItem is null");
         }
@@ -89,8 +118,9 @@ public class Tile : MonoBehaviour
         {
             itemPos = new Vector3(tilePos.x + 2.5f, tilePos.y + 1, tilePos.z);
         }
-        _tileItem = _obstacleManager.SpawnObstacle(itemPos);
-        Debug.Log($"Spawned Obstacle {_tileItem.name} on {gameObject.name}");
+        _tileItem.ItemGO = _obstacleManager.SpawnObstacle(itemPos);
+        _tileItem.ItemType = EItemType.Obstacle;
+        Debug.Log($"Spawned Obstacle {_tileItem.ItemGO.name} on {gameObject.name}");
     }
 
     private void SpawnCollectible()
@@ -113,8 +143,9 @@ public class Tile : MonoBehaviour
             itemPos = new Vector3(tilePos.x + 2.5f, tilePos.y + 1, tilePos.z);
         }
 
-        _tileItem = _collectibleManager.SpawnCollectible(itemPos);
-        Debug.Log($"Spawned Collectible {_tileItem.name} on {gameObject.name}");
+        _tileItem.ItemGO = _collectibleManager.SpawnCollectible(itemPos);
+        _tileItem.ItemType = EItemType.Collectible;
+        Debug.Log($"Spawned Collectible {_tileItem.ItemGO.name} on {gameObject.name}");
     }
 
     private void SpawnProp()
