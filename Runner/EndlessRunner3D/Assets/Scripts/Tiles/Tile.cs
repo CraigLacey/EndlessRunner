@@ -30,6 +30,10 @@ public class Tile : MonoBehaviour
     private CollectibleManager _collectibleManager;
     private ObstacleManager _obstacleManager;
 
+    private int _obstacleSpawnChance = 25; // 25% chance to spawn an obstacle
+    private int _obstacleChanceIncrement = 5; // Increase the chance by 5% each time
+    private int _maxObstacleChance = 50; // Maximum chance to spawn an obstacle
+
     public void Initialize(Action onTileExit)
     {
         _collectibleManager = ServiceLocator.Get<CollectibleManager>();
@@ -39,6 +43,15 @@ public class Tile : MonoBehaviour
         if (_triggerBox != null)
         {
             _triggerBox.Initialize(HandleTileExit);
+        }
+    }
+
+    public void IncreaseObstacleSpawnChance()
+    {
+        _obstacleSpawnChance += _obstacleChanceIncrement;
+        if (_obstacleSpawnChance > _maxObstacleChance)
+        {
+            _obstacleSpawnChance = _maxObstacleChance;
         }
     }
 
@@ -88,7 +101,7 @@ public class Tile : MonoBehaviour
     private void SpawnPathItem()
     {
         int randNum = UnityEngine.Random.Range(0, 100);
-        if(randNum < 25)
+        if(randNum < _obstacleSpawnChance)
         {
             // Spawn an obstacle
             SpawnObstacle();
