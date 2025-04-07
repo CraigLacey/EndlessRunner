@@ -83,6 +83,6 @@ public class TimerManager : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        _timerText.text = $"Time: {_timeTextValue}";
+        _timerText.text = $"Time: {GetTime()}";
     }
 }
