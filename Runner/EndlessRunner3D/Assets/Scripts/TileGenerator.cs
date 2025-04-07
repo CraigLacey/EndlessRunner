@@ -46,9 +46,16 @@ public class TileGenerator : MonoBehaviour
 
     public void SpawnItems()
     {
-        foreach (var tileObj in _tiles)
+        for(int i = 0; i < _tiles.Count; i++)
         {
-            Tile t = tileObj.GetComponent<Tile>();
+            Tile t = _tiles[i].GetComponent<Tile>();
+            if(i == 0)
+            {
+                // This is the first tile, so we need to clear it so the player doesn't
+                // start with an item in front of them
+                t.ClearItems();
+                continue;
+            }
             t.SpawnItem();
         }
     }
