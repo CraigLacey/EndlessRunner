@@ -4285,6 +4285,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: AppLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
+        type: 3}
+      propertyPath: _pools.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
+        type: 3}
+      propertyPath: _pools.Array.data[0].name
+      value: Collectible
+      objectReference: {fileID: 0}
+    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
+        type: 3}
+      propertyPath: _pools.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 8054730689377347079, guid: ce5f5f163ea9da54ea8d5c50ce643939,
+        type: 3}
+    - target: {fileID: 8566049363056795880, guid: d5f14a67fb4c19f4d90d168366e8a3ad,
+        type: 3}
+      propertyPath: _pools.Array.data[0].poolSize
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

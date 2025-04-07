@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// AppLoader is responsible for loading all systems and managing the application lifecycle.
+/// </summary>
 public class AppLoader : SystemLoader
 {
     public static Transform SystemRoot => _transform;
@@ -37,6 +40,9 @@ public class AppLoader : SystemLoader
         ServiceLocator.Clear();
     }
 
+    /// <summary>
+    /// Register all systems in the game that are to be used Globally.
+    /// </summary>
     private void RegisterSystems()
     {
         GameObject timerManagerGO = new GameObject("TimerManager");
@@ -60,6 +66,9 @@ public class AppLoader : SystemLoader
         ServiceLocator.Register<CollectibleManager>(collectibleManagerComponent);
     }
 
+    /// <summary>
+    /// Register all tasks that need to be run at startup
+    /// </summary>
     private void AddStartupTasks()
     {
         Debug.Log("Register Tasks");
