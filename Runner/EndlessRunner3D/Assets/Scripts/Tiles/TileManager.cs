@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,15 +8,26 @@ public class TileManager : MonoBehaviour
     [SerializeField] private TileGenerator _pathTileGenerator;
     [SerializeField] private TileGenerator _rightTileGenerator;
 
-    WaitForSeconds _tileGenerationDelay = new WaitForSeconds(0.5f);
+    private WaitForSeconds _tileGenerationDelay = new WaitForSeconds(0.25f);
+    private TimerManager _timerManager;
 
     public void Initialize()
     {
         Debug.Log($"{nameof(TileManager)} -> Initializing");
+
         _leftTileGenerator.Initialize(HandlePlayerTileExit);
         _pathTileGenerator.Initialize(HandlePlayerTileExit);
         _rightTileGenerator.Initialize(HandlePlayerTileExit);
+
+        _timerManager = ServiceLocator.Get<TimerManager>();
+        _timerManager.TimerPhaseChange += OnTimerPhaseChange;
+
         Debug.Log($"{nameof(TileManager)} -> Initialized");
+    }
+
+    private void OnTimerPhaseChange()
+    {
+        _pathTileGenerator.IncreaseObstacleSpawnRate();
     }
 
     private void HandlePlayerTileExit()

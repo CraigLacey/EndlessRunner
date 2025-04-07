@@ -21,10 +21,15 @@ public class Player : MonoBehaviour
     {
         _playerController.StartRunning();
     }
-    
+
     public void StopRunning()
     {
         _playerController.StopRunning();
+    }
+
+    public void IncreaseSpeed()
+    {
+        _playerController.IncreaseSpeed();
     }
 
     private void OnTriggerEnter(Collider other)

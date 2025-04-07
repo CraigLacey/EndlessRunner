@@ -22,9 +22,6 @@ public class AppLoader : SystemLoader
         // Clear any statics that may have been held between Playmode sessions.
         ClearStatics();
 
-        // Load the application config.
-        LoadConfig();
-
         // Register Systems
         RegisterSystems();
 
@@ -38,11 +35,6 @@ public class AppLoader : SystemLoader
     private void ClearStatics()
     {
         ServiceLocator.Clear();
-    }
-
-    private void LoadConfig()
-    {
-        Debug.Log("Loading Config");
     }
 
     private void RegisterSystems()
@@ -72,8 +64,10 @@ public class AppLoader : SystemLoader
     {
         Debug.Log("Register Tasks");
 
+        // Object Pool Manager will load data from disk into ObjectPool
         ObjectPoolManager _objectPoolManager = transform.GetComponentInChildren<ObjectPoolManager>();
         AddTask(_objectPoolManager.InitializePoolAsync);
+
         AddTask(ServiceLocator.Get<ObstacleManager>().InitializeAsync);
         AddTask(ServiceLocator.Get<CollectibleManager>().InitializeAsync);
     }

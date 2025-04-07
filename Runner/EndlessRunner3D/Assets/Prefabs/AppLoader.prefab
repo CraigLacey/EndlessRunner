@@ -110,8 +110,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
+      propertyPath: pools.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
       propertyPath: objectsToPool.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
+      propertyPath: pools.Array.data[0].name
+      value: Collectible
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
+      propertyPath: pools.Array.data[0].prefab
+      value: 
+      objectReference: {fileID: 8054730689377347079, guid: ce5f5f163ea9da54ea8d5c50ce643939,
+        type: 3}
+    - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
+        type: 3}
+      propertyPath: pools.Array.data[0].poolSize
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
