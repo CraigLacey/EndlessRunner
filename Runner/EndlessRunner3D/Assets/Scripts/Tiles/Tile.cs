@@ -73,18 +73,13 @@ public class Tile : MonoBehaviour
 
     internal void ClearItems()
     {
-        HandleTileExit();
-    }
-
-    private void HandleTileExit()
-    {
-        switch(_tileItem.ItemType)
+        switch (_tileItem.ItemType)
         {
             case EItemType.Collectible:
                 // If the collectible is active, recycle it
                 if (_tileItem.ItemGO.activeInHierarchy)
                 {
-                    _collectibleManager.RecycleCollectible(_tileItem.ItemGO);    
+                    _collectibleManager.RecycleCollectible(_tileItem.ItemGO);
                 }
                 break;
             case EItemType.Obstacle:
@@ -94,7 +89,11 @@ public class Tile : MonoBehaviour
                 Debug.Log($"HandleTileExit for unhandled ItemType {_tileItem.ItemType}");
                 break;
         }
+    }
 
+    private void HandleTileExit()
+    {
+        ClearItems();
         TileExit?.Invoke();
     }
 

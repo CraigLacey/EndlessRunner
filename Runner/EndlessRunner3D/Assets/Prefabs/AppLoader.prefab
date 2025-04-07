@@ -152,7 +152,7 @@ PrefabInstance:
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[3].name
-      value: Shrub
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
@@ -170,13 +170,13 @@ PrefabInstance:
         type: 3}
       propertyPath: objectsToPool.Array.data[2].prefab
       value: 
-      objectReference: {fileID: 4848227947619358604, guid: 9178a5ae6d3653a4fa83cb1b115f418c,
+      objectReference: {fileID: 3635913280967754923, guid: d4d7974f651e79740902af71bd445af4,
         type: 3}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
       propertyPath: objectsToPool.Array.data[3].prefab
       value: 
-      objectReference: {fileID: 3164609654860450312, guid: b3d39e03ac62e4348a60a6a4bb8d00c0,
+      objectReference: {fileID: 7126923388753992369, guid: 339c3faf045c9f44e82082271b178b5c,
         type: 3}
     - target: {fileID: 7951370212314568774, guid: 42981c97001497749a33c8814fec905e,
         type: 3}
