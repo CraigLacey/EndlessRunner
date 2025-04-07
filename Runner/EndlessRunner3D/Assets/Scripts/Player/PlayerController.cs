@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
     private bool _isRunning = false;
+    private float _moveSpeedMultiplier = 1f;
+    private float _multiplierIncreaseRate = 0.1f;
 
     public void Initialize()
     {
@@ -49,14 +51,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    internal void StartRunning()
+    public void StartRunning()
     {
         _isRunning = true;
     }
 
-    internal void StopRunning()
+    public void StopRunning()
     {
         _isRunning = false;
+    }
+
+    public void IncreaseSpeed()
+    {
+        _moveSpeedMultiplier += _multiplierIncreaseRate;
     }
 
     private void FixedUpdate()
@@ -67,7 +74,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Forward movement (automatic)
-        Vector3 forwardMovement = Vector3.forward * _moveSpeed * Time.fixedDeltaTime;
+        Vector3 forwardMovement = Vector3.forward * (_moveSpeed * _moveSpeedMultiplier) * Time.fixedDeltaTime;
         _rb.MovePosition(_rb.position + forwardMovement);
 
         // Update Horizontal Position.

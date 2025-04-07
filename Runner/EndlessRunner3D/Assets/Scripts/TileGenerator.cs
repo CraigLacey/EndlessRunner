@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class TileGenerator : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _tiles;
-    [SerializeField] private GameObject _tilePrefab;
-
+    [SerializeField] private List<GameObject> _tileObjects;
     [SerializeField] private int _tilePosX;
     [SerializeField] private int _tilePosY;
-
     [SerializeField] private int _nextTilePosition = 100;
     [SerializeField] private int _tileOffsetZ = 10;
 
     private int _currentTileIndex = 0;
+    private List<Tile> _tiles = new();
 
     public void Initialize(Action onTileExit)
     {
-        foreach (var tileObj in _tiles)
+        foreach (var tileObj in _tileObjects)
         {
             Tile t = tileObj.GetComponent<Tile>();
             if (t != null)
             {
                 t.Initialize(onTileExit);
+                _tiles.Add(t);
             }
         }
     }
@@ -32,10 +31,10 @@ public class TileGenerator : MonoBehaviour
     /// </summary>
     public void GenerateNextTile()
     {
-        Tile t = _tiles[_currentTileIndex].GetComponent<Tile>();
-        _tiles[_currentTileIndex].transform.position = new Vector3(_tilePosX, _tilePosY, _nextTilePosition);
+        Tile t = _tileObjects[_currentTileIndex].GetComponent<Tile>();
+        _tileObjects[_currentTileIndex].transform.position = new Vector3(_tilePosX, _tilePosY, _nextTilePosition);
         _nextTilePosition += _tileOffsetZ;
-        _currentTileIndex = (_currentTileIndex + 1) % _tiles.Count;
+        _currentTileIndex = (_currentTileIndex + 1) % _tileObjects.Count;
 
         // Populate the tile with items after moving it to it's new position
         if (t != null)
@@ -46,19 +45,25 @@ public class TileGenerator : MonoBehaviour
 
     public void SpawnItems()
     {
-        foreach (var tileObj in _tiles)
+        foreach (var tile in _tiles)
         {
-            Tile t = tileObj.GetComponent<Tile>();
-            t.SpawnItem();
+            tile.SpawnItem();
         }
     }
 
     internal void ClearTiles()
     {
-        foreach(var tileObj in _tiles)
+        foreach(var tile in _tiles)
         {
-            Tile t = tileObj.GetComponent<Tile>();
-            t.ClearItems();
+            tile.ClearItems();
+        }
+    }
+
+    internal void IncreaseObstacleSpawnRate()
+    {
+        foreach (var tile in _tiles)
+        {
+            tile.IncreaseObstacleSpawnChance();
         }
     }
 }

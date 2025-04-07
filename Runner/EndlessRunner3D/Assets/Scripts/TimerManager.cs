@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,12 @@ public class TimerManager : MonoBehaviour
     private float _startTime;
     private float _elapsedTime = 0f;
 
+    private const float PHASE_DURATION = 10f;
+    private float _phaseTimer = PHASE_DURATION;
+
     private UIManager _uiManager;
+    
+    public event Action TimerPhaseChange;
 
     public void Initialize()
     {
@@ -25,6 +31,12 @@ public class TimerManager : MonoBehaviour
         if (_timerRunning)
         {
             _elapsedTime = Time.time - _startTime;
+            _phaseTimer -= Time.deltaTime;
+            if(_phaseTimer <= 0f)
+            {
+                TimerPhaseChange?.Invoke();
+                _phaseTimer = PHASE_DURATION;
+            }
             UpdateTimerText();
         }
     }

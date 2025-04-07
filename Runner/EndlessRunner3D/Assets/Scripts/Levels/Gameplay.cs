@@ -28,6 +28,7 @@ public class Gameplay : MonoBehaviour
 
         _timerManager = ServiceLocator.Get<TimerManager>();
         _timerManager.Initialize();
+        _timerManager.TimerPhaseChange += OnTimerPhaseChange;
 
         _scoreManager = ServiceLocator.Get<ScoreManager>();
         _scoreManager.Initialize();
@@ -42,6 +43,12 @@ public class Gameplay : MonoBehaviour
 
         // Start Gameplay
         StartGameplay();
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log($"{nameof(Gameplay)} -> OnDestroy");
+        _timerManager.TimerPhaseChange -= OnTimerPhaseChange;
     }
 
     private void ResetServices()
@@ -75,5 +82,11 @@ public class Gameplay : MonoBehaviour
 
         // Load GameOver Scene
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+    }
+
+    private void OnTimerPhaseChange()
+    {
+        Debug.Log($"{nameof(Gameplay)} -> Timer Phase Change");
+        _player.IncreaseSpeed();
     }
 }

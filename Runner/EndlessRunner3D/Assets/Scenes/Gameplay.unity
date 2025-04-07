@@ -1095,7 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1b9af746b53045b26f594fd24723b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tiles:
+  _tileObjects:
   - {fileID: 2017183633}
   - {fileID: 1502051655}
   - {fileID: 1943320030}
@@ -1106,7 +1106,6 @@ MonoBehaviour:
   - {fileID: 1904933172}
   - {fileID: 1488068732}
   - {fileID: 2085915759}
-  _tilePrefab: {fileID: 0}
   _tilePosX: -10
   _tilePosY: -1
   _nextTilePosition: 100
@@ -2147,7 +2146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1b9af746b53045b26f594fd24723b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tiles:
+  _tileObjects:
   - {fileID: 896191284}
   - {fileID: 1130350669}
   - {fileID: 391460816}
@@ -2158,7 +2157,6 @@ MonoBehaviour:
   - {fileID: 886140219}
   - {fileID: 1901669617}
   - {fileID: 1684263315}
-  _tilePrefab: {fileID: 0}
   _tilePosX: 0
   _tilePosY: -1
   _nextTilePosition: 100
@@ -4298,7 +4296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1b9af746b53045b26f594fd24723b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tiles:
+  _tileObjects:
   - {fileID: 1525609393}
   - {fileID: 1210823106}
   - {fileID: 1097277644}
@@ -4309,7 +4307,6 @@ MonoBehaviour:
   - {fileID: 253212170}
   - {fileID: 251699989}
   - {fileID: 71704355}
-  _tilePrefab: {fileID: 0}
   _tilePosX: 10
   _tilePosY: -1
   _nextTilePosition: 100
