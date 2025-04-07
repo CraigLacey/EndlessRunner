@@ -4598,11 +4598,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5056156639255990339, guid: ac44b126f5508174c954b7679baaaa46,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 1.11
-      objectReference: {fileID: 0}
     - target: {fileID: 6766854655967555178, guid: ac44b126f5508174c954b7679baaaa46,
         type: 3}
       propertyPath: _leftButton
