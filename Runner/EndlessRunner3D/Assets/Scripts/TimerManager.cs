@@ -1,3 +1,4 @@
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class TimerManager : MonoBehaviour
     private float _elapsedTime = 0f;
 
     private UIManager _uiManager;
+    private string _timeTextValue;
+    private StringBuilder _stringBuilder = new();
 
     public void Initialize()
     {
@@ -53,13 +56,21 @@ public class TimerManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(_elapsedTime / 60);
         int seconds = Mathf.FloorToInt(_elapsedTime % 60);
         int milliseconds = Mathf.FloorToInt((_elapsedTime * 1000) % 1000);
-        string timeText = string.Format("{0:000}m:{1:00}s:{2:000}ms", minutes, seconds, milliseconds);
-        return timeText;
+
+        _stringBuilder.Clear();
+        _stringBuilder.Append(minutes.ToString("000"));
+        _stringBuilder.Append("m:");
+        _stringBuilder.Append(seconds.ToString("00"));
+        _stringBuilder.Append("s:");
+        _stringBuilder.Append(milliseconds.ToString("000"));
+        _stringBuilder.Append("ms");
+
+        _timeTextValue = _stringBuilder.ToString();
+        return _timeTextValue;
     }
 
     private void UpdateTimerText()
     {
-        string timeText = GetTime();
-        _timerText.text = $"Time: {timeText}";
+        _timerText.text = $"Time: {_timeTextValue}";
     }
 }
