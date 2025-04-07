@@ -1,11 +1,18 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// CollectibleManager is responsible for managing collectibles in the game.
+/// </summary>
 public class CollectibleManager : MonoBehaviour
 {
     private ObjectPoolManager _objectPoolManager;
     private const string CollectiblePoolName = "Collectible";
 
+    /// <summary>
+    /// Initialize the CollectibleManager.
+    /// </summary>
+    /// <returns></returns>
     public Task InitializeAsync()
     {
         Debug.Log($"{nameof(CollectibleManager)} -> Initializing");
@@ -20,6 +27,11 @@ public class CollectibleManager : MonoBehaviour
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Spawn a collectible at the specified position.
+    /// </summary>
+    /// <param name="spawnPos"></param>
+    /// <returns></returns>
     public GameObject SpawnCollectible(Vector3 spawnPos)
     {
         if (_objectPoolManager == null || !_objectPoolManager.IsInitialized)
@@ -40,6 +52,10 @@ public class CollectibleManager : MonoBehaviour
         return collectible;
     }
 
+    /// <summary>
+    /// Recycle a collectible back to it's pool.
+    /// </summary>
+    /// <param name="collectible"></param>
     public void RecycleCollectible(GameObject collectible)
     {
         _objectPoolManager.RecycleObject(collectible, CollectiblePoolName);

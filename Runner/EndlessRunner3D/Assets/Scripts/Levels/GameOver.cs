@@ -2,11 +2,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// GameOver is responsible for displaying the game over screen.
+/// </summary>
 public class GameOver : MonoBehaviour
 {
+    [Header("Game Over UI")]
     [SerializeField] private TextMeshProUGUI _timerValue;
     [SerializeField] private TextMeshProUGUI _scoreValue;
 
+    [Header("Buttons")]
     [SerializeField] private Button _retryButton;
     [SerializeField] private Button _quitButton;
 
@@ -31,6 +36,7 @@ public class GameOver : MonoBehaviour
 
     private void OnRetryButtonClicked()
     {
+        // Scene 0 will always be the Application Start scene.
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }

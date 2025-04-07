@@ -5,6 +5,9 @@ using UnityEngine;
 /// </summary>
 public class AppLoader : SystemLoader
 {
+    /// <summary>
+    /// The root transform for all MonoBehaviours that are registered in the system.
+    /// </summary>
     public static Transform SystemRoot => _transform;
     private static Transform _transform;
 
@@ -12,6 +15,8 @@ public class AppLoader : SystemLoader
 
     private async void Awake()
     {
+        // Singleton pattern to ensure only one instance of AppLoader exists
+        // This is the only Singleton in the game. All other systems are registered in the ServiceLocator to provide inversion of control.
         if (_instance != null && _instance != this)
         {
             // Duplicate loader detected
@@ -35,6 +40,9 @@ public class AppLoader : SystemLoader
         await RunTasks();
     }
 
+    /// <summary>
+    /// Clear static references that may be held between Playmode sessions
+    /// </summary>
     private void ClearStatics()
     {
         ServiceLocator.Clear();
@@ -73,7 +81,8 @@ public class AppLoader : SystemLoader
     {
         Debug.Log("Register Tasks");
 
-        // Object Pool Manager will load data from disk into ObjectPool
+        // Object Pool Manager will initially load any pool info from the inspector.
+        // Additional pools can be added at runtime.
         ObjectPoolManager _objectPoolManager = transform.GetComponentInChildren<ObjectPoolManager>();
         AddTask(_objectPoolManager.InitializePoolAsync);
 

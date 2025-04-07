@@ -2,7 +2,10 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
 
-public static class WebRequestUtils 
+/// <summary>
+/// WebRequestUtils adds helpers for UnityWebRequests.
+/// </summary>
+public static class WebRequestUtils
 {
     // Helper function to await UnityWebRequest
     public static Task SendWebRequestAsync(UnityWebRequest request)

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// ObstacleData is a class that holds data for an obstacle.
+/// </summary>
 [System.Serializable]
 public class ObstacleData
 {

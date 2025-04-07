@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -33,7 +32,7 @@ public class SystemLoader : MonoBehaviour
             Task t = initFunc.Invoke();
             await t;
 
-            if(t.IsFaulted || t.IsCanceled)
+            if (t.IsFaulted || t.IsCanceled)
             {
                 Debug.LogException(t.Exception);
             }
@@ -60,6 +59,9 @@ public class SystemLoader : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method is called when all tasks are complete.
+    /// </summary>
     private static void OnComplete()
     {
         Debug.Log("SystemLoader -> OnComplete");

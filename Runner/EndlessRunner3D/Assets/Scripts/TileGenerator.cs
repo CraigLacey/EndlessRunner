@@ -45,10 +45,10 @@ public class TileGenerator : MonoBehaviour
 
     public void SpawnItems()
     {
-        for(int i = 0; i < _tiles.Count; i++)
+        for (int i = 0; i < _tiles.Count; i++)
         {
             Tile t = _tiles[i];
-            if(i == 0)
+            if (i == 0)
             {
                 // This is the first tile, so we need to clear it so the player doesn't
                 // start with an item in front of them
@@ -59,15 +59,15 @@ public class TileGenerator : MonoBehaviour
         }
     }
 
-    internal void ClearTiles()
+    public void ClearTiles()
     {
-        foreach(var tile in _tiles)
+        foreach (var tile in _tiles)
         {
             tile.ClearItems();
         }
     }
 
-    internal void IncreaseObstacleSpawnRate()
+    public void IncreaseObstacleSpawnRate()
     {
         foreach (var tile in _tiles)
         {

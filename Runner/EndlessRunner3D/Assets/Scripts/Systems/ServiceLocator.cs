@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ServiceLocator is a static class that provides a way to register and retrieve services in the game.
+/// This is a simple implementation of the Service Locator pattern providing Inversion of Control.
+/// </summary>
 public static class ServiceLocator
 {
     public static readonly Dictionary<Type, object> _serviceMap = new Dictionary<Type, object>();

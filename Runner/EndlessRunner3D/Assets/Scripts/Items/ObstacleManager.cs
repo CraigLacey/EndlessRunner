@@ -86,6 +86,7 @@ public class ObstacleManager : MonoBehaviour
         List<Task> loadTasks = new();
         List<GameObject> spawnedObstacles = new();
 
+        // Load from StreamingAssets. On device use UnityWebRequest to get the file list.
 #if UNITY_ANDROID && !UNITY_EDITOR
         string dataPath = Path.Combine(Application.streamingAssetsPath, obstacleDataDirectory);
         using (UnityWebRequest request = UnityWebRequest.Get(dataPath))

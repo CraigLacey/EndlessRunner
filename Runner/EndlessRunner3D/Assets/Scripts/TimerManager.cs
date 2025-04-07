@@ -3,6 +3,9 @@ using System;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Manages the timer for the game.
+/// </summary>
 public class TimerManager : MonoBehaviour
 {
     private TextMeshProUGUI _timerText;
@@ -16,9 +19,15 @@ public class TimerManager : MonoBehaviour
     private UIManager _uiManager;
     private string _timeTextValue;
     private StringBuilder _stringBuilder = new();
-    
+
+    /// <summary>
+    /// Event triggered when the timer phase changes.
+    /// </summary>
     public event Action TimerPhaseChange;
 
+    /// <summary>
+    /// Initializes the TimerManager
+    /// </summary>
     public void Initialize()
     {
         Debug.Log($"{nameof(TimerManager)} -> Initializing");
@@ -44,6 +53,9 @@ public class TimerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Starts the timer. Called when the game starts.
+    /// </summary>
     public void StartTimer()
     {
         Debug.Log($"{nameof(TimerManager)} -> Starting Timer");
@@ -51,18 +63,28 @@ public class TimerManager : MonoBehaviour
         _startTime = Time.time;
     }
 
+    /// <summary>
+    /// Pauses the timer. Called when the game is paused.
+    /// </summary>
     public void PauseTimer()
     {
         Debug.Log($"{nameof(TimerManager)} -> Pausing Timer");
         _timerRunning = false;
     }
 
+    /// <summary>
+    /// Resumes the timer. Called when the game is resumed.
+    /// </summary>
     public void ResumeTimer()
     {
         Debug.Log($"{nameof(TimerManager)} -> Resuming Timer");
         _timerRunning = true;
     }
 
+    /// <summary>
+    /// Returns the elapsed time in a formatted string.
+    /// </summary>
+    /// <returns></returns>
     public string GetTime()
     {
         int minutes = Mathf.FloorToInt(_elapsedTime / 60);
@@ -81,6 +103,9 @@ public class TimerManager : MonoBehaviour
         return _timeTextValue;
     }
 
+    /// <summary>
+    /// Updates the timer text in the UI.
+    /// </summary>
     private void UpdateTimerText()
     {
         _timerText.text = $"Time: {GetTime()}";

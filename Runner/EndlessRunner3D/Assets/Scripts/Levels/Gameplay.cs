@@ -1,7 +1,14 @@
 using UnityEngine;
 
+/// <summary>
+/// Gameplay class is responsible for managing the game state.
+/// </summary>
 public class Gameplay : MonoBehaviour
 {
+    [Header("Game Over Scene")]
+    [SerializeField] private int _gameOverSceneIndex = 2;
+
+    [Header("Gameplay Components")]
     [SerializeField] private Player _player;
     [SerializeField] private TileManager _tileManager;
     [SerializeField] private UIManager _uiManager;
@@ -15,6 +22,9 @@ public class Gameplay : MonoBehaviour
         SystemLoader.CallOnComplete(Initialize);
     }
 
+    /// <summary>
+    /// Initialize the Gameplay Systems
+    /// </summary>
     private void Initialize()
     {
         Debug.Log($"{nameof(Gameplay)} -> Initializing");
@@ -45,12 +55,18 @@ public class Gameplay : MonoBehaviour
         StartGameplay();
     }
 
+    /// <summary>
+    /// Gameplay cleanup when the scene is unloaded
+    /// </summary>
     private void OnDestroy()
     {
         Debug.Log($"{nameof(Gameplay)} -> OnDestroy");
         _timerManager.TimerPhaseChange -= OnTimerPhaseChange;
     }
 
+    /// <summary>
+    /// Resets the services in case we are reloading the scene when the player retries
+    /// </summary>
     private void ResetServices()
     {
         // Clear Scene Services
@@ -60,6 +76,9 @@ public class Gameplay : MonoBehaviour
         ServiceLocator.Deregister<Player>();
     }
 
+    /// <summary>
+    /// Starts the gameplay by populating tiles and starting the timer, and player.
+    /// </summary>
     private void StartGameplay()
     {
         _tileManager.PopulateTiles();
@@ -67,6 +86,9 @@ public class Gameplay : MonoBehaviour
         _player.StartRunning();
     }
 
+    /// <summary>
+    /// Handles the player collision with an obstacle.
+    /// </summary>
     private void OnObstacleCollision()
     {
         Debug.Log($"{nameof(Gameplay)} -> Player collided with an obstacle");
@@ -81,9 +103,12 @@ public class Gameplay : MonoBehaviour
         objectPoolManager.DeactivateObjects();
 
         // Load GameOver Scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(_gameOverSceneIndex);
     }
 
+    /// <summary>
+    /// Handles the timer phase change event.
+    /// </summary>
     private void OnTimerPhaseChange()
     {
         Debug.Log($"{nameof(Gameplay)} -> Timer Phase Change");

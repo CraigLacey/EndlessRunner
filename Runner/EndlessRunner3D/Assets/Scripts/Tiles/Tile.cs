@@ -1,8 +1,14 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Tile is a class that represents a tile in the game.
+/// </summary>
 public class Tile : MonoBehaviour
 {
+    /// <summary>
+    /// ETileType is an enumeration that defines the type of tile.
+    /// </summary>
     public enum ETileType
     {
         None = 0,
@@ -12,6 +18,9 @@ public class Tile : MonoBehaviour
     [SerializeField] private ETileType _tileType = ETileType.None;
     [SerializeField] private TriggerBox _triggerBox;
 
+    /// <summary>
+    /// EItemType is an enumeration that defines the type of item on the tile.
+    /// </summary>
     public enum EItemType
     {
         None = 0,
@@ -19,6 +28,7 @@ public class Tile : MonoBehaviour
         Obstacle = 2,
         Prop = 3,
     }
+
     private struct TileItem
     {
         public GameObject ItemGO;
@@ -30,10 +40,15 @@ public class Tile : MonoBehaviour
     private CollectibleManager _collectibleManager;
     private ObstacleManager _obstacleManager;
 
+    // TODO: Stats to SO
     private int _obstacleSpawnChance = 25; // 25% chance to spawn an obstacle
     private int _obstacleChanceIncrement = 5; // Increase the chance by 5% each time
     private int _maxObstacleChance = 50; // Maximum chance to spawn an obstacle
 
+    /// <summary>
+    /// Initialize the Tile.
+    /// </summary>
+    /// <param name="onTileExit"></param>
     public void Initialize(Action onTileExit)
     {
         _collectibleManager = ServiceLocator.Get<CollectibleManager>();
@@ -46,6 +61,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Increase the chance of spawning an obstacle on the Tile
+    /// </summary>
     public void IncreaseObstacleSpawnChance()
     {
         _obstacleSpawnChance += _obstacleChanceIncrement;
@@ -55,6 +73,9 @@ public class Tile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn an item on the Tile based on the tile type.
+    /// </summary>
     public void SpawnItem()
     {
         switch (_tileType)
@@ -71,7 +92,10 @@ public class Tile : MonoBehaviour
         }
     }
 
-    internal void ClearItems()
+    /// <summary>
+    /// Clear the items on the Tile.
+    /// </summary>
+    public void ClearItems()
     {
         switch (_tileItem.ItemType)
         {
@@ -100,7 +124,7 @@ public class Tile : MonoBehaviour
     private void SpawnPathItem()
     {
         int randNum = UnityEngine.Random.Range(0, 100);
-        if(randNum < _obstacleSpawnChance)
+        if (randNum < _obstacleSpawnChance)
         {
             // Spawn an obstacle
             SpawnObstacle();
@@ -111,7 +135,7 @@ public class Tile : MonoBehaviour
             SpawnCollectible();
         }
 
-        if(_tileItem.ItemGO == null)
+        if (_tileItem.ItemGO == null)
         {
             Debug.Log("SpawnItem failed: _tileItem is null");
         }
@@ -165,8 +189,9 @@ public class Tile : MonoBehaviour
         Debug.Log($"Spawned Collectible {_tileItem.ItemGO.name} on {gameObject.name}");
     }
 
+    // TODO: Implement Prop spawning logic for sidleine tiles
     private void SpawnProp()
     {
-        
+        // spawn a random item on the sidelines
     }
 }

@@ -1,7 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// Collectible is a class that represents a collectible item in the game.
+/// </summary>
 public class Collectible : MonoBehaviour
 {
+    [Header("Collectible Properties")]
     [SerializeField] private int _scoreValue = 1;
     [SerializeField] private float _rotationSpeed = 50f;
     [SerializeField] private float _bounceHeight = 0.5f;
@@ -10,9 +14,15 @@ public class Collectible : MonoBehaviour
     private ScoreManager _scoreManager;
     private CollectibleManager _collectibleManager;
 
+    /// <summary>
+    /// Is the Collectible initialized?
+    /// </summary>
     public bool Initialized => _initialized;
     private bool _initialized = false;
 
+    /// <summary>
+    /// Initialize the Collectible.
+    /// </summary>
     public void Initialize()
     {
         _scoreManager = ServiceLocator.Get<ScoreManager>();
@@ -35,6 +45,9 @@ public class Collectible : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
+    /// <summary>
+    /// Collect the collectible and recycle it back to the Collectible pool.
+    /// </summary>
     public void Collect()
     {
         if (!_initialized)
@@ -42,7 +55,7 @@ public class Collectible : MonoBehaviour
             return;
         }
 
-        // Add the collectible to the player's inventory or score
+        // Add the collectible value to the player's score
         Debug.Log($"{nameof(Collectible)} -> Collected!");
         _scoreManager.UpdateScore(_scoreValue);
         _collectibleManager.RecycleCollectible(gameObject);
