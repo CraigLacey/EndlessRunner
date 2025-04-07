@@ -23,28 +23,19 @@ public class SystemLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// Run all tasks in the queue sequentially.
+    /// Run all tasks in the queue sequentially to avoid dependency issues
     /// </summary>
     public async Task RunTasks()
     {
-        if (_taskQueue.Count != 0)
+        while (_taskQueue.Count > 0)
         {
-            // Create a list of tasks to run
-            List<Task> tasks = new();
-            tasks.AddRange(_taskQueue.Select(task => task()));
+            Func<Task> initFunc = _taskQueue.Dequeue();
+            Task t = initFunc.Invoke();
+            await t;
 
-            // Run all tasks in parallel
-            Task allTasks = Task.WhenAll(tasks);
-            await allTasks;
-
-            // Check if all tasks are completed successfully
-            if (allTasks.IsCompletedSuccessfully)
+            if(t.IsFaulted || t.IsCanceled)
             {
-                Debug.Log("All tasks completed successfully.");
-            }
-            else
-            {
-                Debug.LogError("One or more tasks failed.");
+                Debug.LogException(t.Exception);
             }
         }
 

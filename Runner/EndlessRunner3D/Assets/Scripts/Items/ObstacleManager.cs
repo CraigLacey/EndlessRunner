@@ -1,4 +1,4 @@
-using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ObstacleManager : MonoBehaviour
@@ -6,10 +6,18 @@ public class ObstacleManager : MonoBehaviour
     private ObjectPoolManager _objectPoolManager;
     private const string ObstaclePoolName = "Obstacle";
 
-    public void Initialize()
+    public Task InitializeAsync()
     {
         Debug.Log($"{nameof(ObstacleManager)} -> Initializing");
         _objectPoolManager = ServiceLocator.Get<ObjectPoolManager>();
+
+        if(_objectPoolManager == null)
+        {
+            Debug.LogError($"{nameof(ObstacleManager)} -> ObjectPoolManager is not ready");
+            return Task.FromException(new System.Exception("ObjectPoolManager is not ready"));
+        }
+
+        return Task.CompletedTask;
     }
 
     public GameObject SpawnObstacle(Vector3 spawnPos)
@@ -39,7 +47,7 @@ public class ObstacleManager : MonoBehaviour
         }
     }
 
-    internal void RecycleObstacle(GameObject itemGO)
+    public void RecycleObstacle(GameObject itemGO)
     {
         _objectPoolManager.RecycleObject(itemGO, ObstaclePoolName);
     }

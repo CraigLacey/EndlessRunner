@@ -79,8 +79,7 @@ public class ObjectPoolManager : MonoBehaviour
                 int poolSize = pool.Count;
                 for (int i = 0; i < poolSize; ++i)
                 {
-                    pool.TryDequeue(out GameObject go);
-                    if (go != null && go.activeInHierarchy)
+                    if (pool.TryDequeue(out GameObject go))
                     {
                         go.SetActive(false);
                         pool.Enqueue(go);

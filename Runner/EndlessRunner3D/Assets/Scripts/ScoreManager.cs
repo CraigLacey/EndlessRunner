@@ -3,14 +3,19 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _scoreText;
-
+    private TextMeshProUGUI _scoreText;
+    private UIManager _uiManager;
     private int _currentScore = 0;
+
+    public int CurrentScore => _currentScore;
 
     public void Initialize()
     {
         Debug.Log($"{nameof(ScoreManager)} -> Initializing");
-        _scoreText.text = "0";
+        _uiManager = ServiceLocator.Get<UIManager>();
+        _scoreText = _uiManager.GetScoreUI();
+        _currentScore = 0;
+        UpdateScore(0);
         Debug.Log($"{nameof(ScoreManager)} -> Initialized");
     }
 
@@ -18,10 +23,5 @@ public class ScoreManager : MonoBehaviour
     {
         _currentScore += score;
         _scoreText.text = $"Score: {_currentScore}"; 
-    }
-
-    public int GetScore()
-    {
-        return _currentScore;
     }
 }

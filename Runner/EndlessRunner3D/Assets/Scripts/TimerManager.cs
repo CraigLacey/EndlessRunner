@@ -3,16 +3,20 @@ using UnityEngine;
 
 public class TimerManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _timerText;
-
+    private TextMeshProUGUI _timerText;
     private bool _timerRunning = false;
     private float _startTime;
     private float _elapsedTime = 0f;
 
+    private UIManager _uiManager;
+
     public void Initialize()
     {
         Debug.Log($"{nameof(TimerManager)} -> Initializing");
-
+        _uiManager = ServiceLocator.Get<UIManager>();
+        _timerText = _uiManager.GetTimerUI();
+        _elapsedTime = 0f;
+        UpdateTimerText();
         Debug.Log($"{nameof(TimerManager)} -> Initialized");
     }
 
@@ -55,9 +59,7 @@ public class TimerManager : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        int minutes = Mathf.FloorToInt(_elapsedTime / 60);
-        int seconds = Mathf.FloorToInt(_elapsedTime % 60);
-        int milliseconds = Mathf.FloorToInt((_elapsedTime * 1000) % 1000);
-        _timerText.text = string.Format("Time: {0:000}m:{1:00}s:{2:000}ms", minutes, seconds, milliseconds);
+        string timeText = GetTime();
+        _timerText.text = $"Time: {timeText}";
     }
 }

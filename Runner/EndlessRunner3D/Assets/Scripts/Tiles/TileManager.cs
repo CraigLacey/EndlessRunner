@@ -37,4 +37,11 @@ public class TileManager : MonoBehaviour
         _pathTileGenerator.GenerateNextTile();
         _rightTileGenerator.GenerateNextTile();
     }
+
+    internal void ClearTiles()
+    {
+        _leftTileGenerator.ClearTiles();
+        _pathTileGenerator.ClearTiles();
+        _rightTileGenerator.ClearTiles();
+    }
 }

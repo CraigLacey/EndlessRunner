@@ -4,10 +4,10 @@ public class Gameplay : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private TileManager _tileManager;
-    [SerializeField] private TimerManager _timerManager;
-    [SerializeField] private ScoreManager _scoreManager;
-    [SerializeField] private CollectibleManager _collectibleManager;
-    [SerializeField] private ObstacleManager _obstacleManager;
+    [SerializeField] private UIManager _uiManager;
+
+    private TimerManager _timerManager;
+    private ScoreManager _scoreManager;
 
     private void Start()
     {
@@ -23,21 +23,17 @@ public class Gameplay : MonoBehaviour
         ResetServices();
 
         ServiceLocator.Register<Gameplay>(this);
+        
+        _uiManager.Initialize();
 
+        _timerManager = ServiceLocator.Get<TimerManager>();
+        _timerManager.Initialize();
+
+        _scoreManager = ServiceLocator.Get<ScoreManager>();
         _scoreManager.Initialize();
-        ServiceLocator.Register<ScoreManager>(_scoreManager);
-
-        _collectibleManager.Initialize();
-        ServiceLocator.Register<CollectibleManager>(_collectibleManager);
-
-        _obstacleManager.Initialize();
-        ServiceLocator.Register<ObstacleManager>(_obstacleManager);
 
         _tileManager.Initialize();
         ServiceLocator.Register<TileManager>(_tileManager);
-
-        _timerManager.Initialize();
-        ServiceLocator.Register<TimerManager>(_timerManager);
 
         _player.Initialize(OnObstacleCollision);
         ServiceLocator.Register<Player>(_player);
@@ -52,11 +48,8 @@ public class Gameplay : MonoBehaviour
     {
         // Clear Scene Services
         ServiceLocator.Deregister<Gameplay>();
-        ServiceLocator.Deregister<ScoreManager>();
-        ServiceLocator.Deregister<CollectibleManager>();
-        ServiceLocator.Deregister<ObstacleManager>();
+        ServiceLocator.Deregister<UIManager>();
         ServiceLocator.Deregister<TileManager>();
-        ServiceLocator.Deregister<TimerManager>();
         ServiceLocator.Deregister<Player>();
     }
 
@@ -70,11 +63,12 @@ public class Gameplay : MonoBehaviour
     private void OnObstacleCollision()
     {
         Debug.Log($"{nameof(Gameplay)} -> Player collided with an obstacle");
-        
+
         // Handle game over logic here
         _player.StopRunning();
         _timerManager.PauseTimer();
-        
+        _tileManager.ClearTiles();
+
         // Clear Object Pool
         ObjectPoolManager objectPoolManager = ServiceLocator.Get<ObjectPoolManager>();
         objectPoolManager.DeactivateObjects();

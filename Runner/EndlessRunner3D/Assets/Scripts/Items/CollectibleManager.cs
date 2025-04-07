@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class CollectibleManager : MonoBehaviour
@@ -5,10 +6,18 @@ public class CollectibleManager : MonoBehaviour
     private ObjectPoolManager _objectPoolManager;
     private const string CollectiblePoolName = "Collectible";
 
-    public void Initialize()
+    public Task InitializeAsync()
     {
         Debug.Log($"{nameof(CollectibleManager)} -> Initializing");
         _objectPoolManager = ServiceLocator.Get<ObjectPoolManager>();
+
+        if(_objectPoolManager == null)
+        {
+            Debug.LogError($"{nameof(CollectibleManager)} -> ObjectPoolManager is not ready");
+            return Task.FromException(new System.Exception("ObjectPoolManager is not ready"));
+        }
+
+        return Task.CompletedTask;
     }
 
     public GameObject SpawnCollectible(Vector3 spawnPos)

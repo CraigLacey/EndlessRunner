@@ -58,6 +58,11 @@ public class Tile : MonoBehaviour
         }
     }
 
+    internal void ClearItems()
+    {
+        HandleTileExit();
+    }
+
     private void HandleTileExit()
     {
         switch(_tileItem.ItemType)

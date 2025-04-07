@@ -25,8 +25,11 @@ public class AppLoader : SystemLoader
         // Load the application config.
         LoadConfig();
 
+        // Register Systems
+        RegisterSystems();
+
         // Register tasks to be run.
-        RegisterTasks();
+        AddStartupTasks();
 
         // Run tasks that have been registered.
         await RunTasks();
@@ -42,11 +45,36 @@ public class AppLoader : SystemLoader
         Debug.Log("Loading Config");
     }
 
-    private void RegisterTasks()
+    private void RegisterSystems()
+    {
+        GameObject timerManagerGO = new GameObject("TimerManager");
+        TimerManager timerManager = timerManagerGO.AddComponent<TimerManager>();
+        timerManagerGO.transform.SetParent(SystemRoot);
+        ServiceLocator.Register<TimerManager>(timerManager);
+
+        GameObject scoreManagerGO = new GameObject("ScoreManager");
+        ScoreManager scoreManager = scoreManagerGO.AddComponent<ScoreManager>();
+        scoreManagerGO.transform.SetParent(SystemRoot);
+        ServiceLocator.Register<ScoreManager>(scoreManager);
+
+        GameObject obstacleManagerGO = new GameObject("ObstacleManager");
+        ObstacleManager obstacleManager = obstacleManagerGO.AddComponent<ObstacleManager>();
+        obstacleManagerGO.transform.SetParent(SystemRoot);
+        ServiceLocator.Register<ObstacleManager>(obstacleManager);
+
+        GameObject collectibleManager = new GameObject("CollectibleManager");
+        CollectibleManager collectibleManagerComponent = collectibleManager.AddComponent<CollectibleManager>();
+        collectibleManager.transform.SetParent(SystemRoot);
+        ServiceLocator.Register<CollectibleManager>(collectibleManagerComponent);
+    }
+
+    private void AddStartupTasks()
     {
         Debug.Log("Register Tasks");
 
         ObjectPoolManager _objectPoolManager = transform.GetComponentInChildren<ObjectPoolManager>();
         AddTask(_objectPoolManager.InitializePoolAsync);
+        AddTask(ServiceLocator.Get<ObstacleManager>().InitializeAsync);
+        AddTask(ServiceLocator.Get<CollectibleManager>().InitializeAsync);
     }
 }

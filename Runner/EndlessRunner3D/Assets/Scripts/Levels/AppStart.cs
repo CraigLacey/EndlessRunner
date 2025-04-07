@@ -5,7 +5,7 @@ public class AppStart : MonoBehaviour
 {
     [SerializeField] private int _sceneToLoad;
 
-    private float _minDisplayTime = 3.5f * 1000;
+    private float _minDisplayTime = 2.0f * 1000;
 
     private void Start()
     {
@@ -19,7 +19,12 @@ public class AppStart : MonoBehaviour
 
         Debug.Log($"Loading Scene: {_sceneToLoad}");
         await ShowSplashScreenAsync();
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneToLoad);
+        var loadTask = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(_sceneToLoad);
+        while(loadTask.isDone == false)
+        {
+            Debug.Log($"Loading Scene: {_sceneToLoad} - Progress: {loadTask.progress * 100}%");
+            await Task.Delay(100);
+        }
     }
 
     private async Task ShowSplashScreenAsync()

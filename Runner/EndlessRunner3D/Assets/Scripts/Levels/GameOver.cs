@@ -13,7 +13,7 @@ public class GameOver : MonoBehaviour
     private void Awake()
     {
         _timerValue.text = ServiceLocator.Get<TimerManager>().GetTime();
-        _scoreValue.text = ServiceLocator.Get<ScoreManager>().GetScore().ToString();
+        _scoreValue.text = ServiceLocator.Get<ScoreManager>().CurrentScore.ToString();
         _retryButton.onClick.AddListener(OnRetryButtonClicked);
         _quitButton.onClick.AddListener(OnQuitButtonClicked);
     }

@@ -52,4 +52,13 @@ public class TileGenerator : MonoBehaviour
             t.SpawnItem();
         }
     }
+
+    internal void ClearTiles()
+    {
+        foreach(var tileObj in _tiles)
+        {
+            Tile t = tileObj.GetComponent<Tile>();
+            t.ClearItems();
+        }
+    }
 }
