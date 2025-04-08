@@ -13,8 +13,10 @@ public class TimerManager : MonoBehaviour
     private float _startTime;
     private float _elapsedTime = 0f;
 
-    private const float PHASE_DURATION = 10f;
-    private float _phaseTimer = PHASE_DURATION;
+    // Gameplay Phase Progression
+    private GameProgessionSO _gameProgessionData;
+    private float _phaseDuration;
+    private float _phaseTimer;
 
     private UIManager _uiManager;
     private string _timeTextValue;
@@ -31,6 +33,10 @@ public class TimerManager : MonoBehaviour
     public void Initialize()
     {
         Debug.Log($"{nameof(TimerManager)} -> Initializing");
+        _gameProgessionData = ServiceLocator.Get<Gameplay>().ProgessionData;
+        _phaseDuration = _gameProgessionData.PhaseDurationSeconds;
+        _phaseTimer = _phaseDuration;
+
         _uiManager = ServiceLocator.Get<UIManager>();
         _timerText = _uiManager.GetTimerUI();
         _elapsedTime = 0f;
@@ -47,7 +53,7 @@ public class TimerManager : MonoBehaviour
             if(_phaseTimer <= 0f)
             {
                 TimerPhaseChange?.Invoke();
-                _phaseTimer = PHASE_DURATION;
+                _phaseTimer = _phaseDuration;
             }
             UpdateTimerText();
         }
@@ -92,11 +98,11 @@ public class TimerManager : MonoBehaviour
         int milliseconds = Mathf.FloorToInt((_elapsedTime * 1000) % 1000);
 
         _stringBuilder.Clear();
-        _stringBuilder.Append(minutes.ToString("000"));
+        _stringBuilder.Append(minutes.ToString("00"));
         _stringBuilder.Append("m:");
         _stringBuilder.Append(seconds.ToString("00"));
         _stringBuilder.Append("s:");
-        _stringBuilder.Append(milliseconds.ToString("000"));
+        _stringBuilder.Append(milliseconds.ToString("00"));
         _stringBuilder.Append("ms");
 
         _timeTextValue = _stringBuilder.ToString();

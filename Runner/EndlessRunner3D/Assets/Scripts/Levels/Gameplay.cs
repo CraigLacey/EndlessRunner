@@ -13,6 +13,10 @@ public class Gameplay : MonoBehaviour
     [SerializeField] private TileManager _tileManager;
     [SerializeField] private UIManager _uiManager;
 
+    [Header("Gameplay Config")]
+    [SerializeField] private GameProgessionSO _progressionData;
+    public GameProgessionSO ProgessionData => _progressionData;
+
     private TimerManager _timerManager;
     private ScoreManager _scoreManager;
 

@@ -40,10 +40,11 @@ public class Tile : MonoBehaviour
     private CollectibleManager _collectibleManager;
     private ObstacleManager _obstacleManager;
 
-    // TODO: Stats to SO
-    private int _obstacleSpawnChance = 25; // 25% chance to spawn an obstacle
-    private int _obstacleChanceIncrement = 5; // Increase the chance by 5% each time
-    private int _maxObstacleChance = 50; // Maximum chance to spawn an obstacle
+    // Gameplay progression data
+    private GameProgessionSO _gameProgessionData;
+    private int _obstacleSpawnChance;
+    private int _obstacleChanceIncrement;
+    private int _maxObstacleChance;
 
     /// <summary>
     /// Initialize the Tile.
@@ -51,6 +52,11 @@ public class Tile : MonoBehaviour
     /// <param name="onTileExit"></param>
     public void Initialize(Action onTileExit)
     {
+        _gameProgessionData = ServiceLocator.Get<Gameplay>().ProgessionData;
+        _obstacleSpawnChance = _gameProgessionData.ObstacleSpawnChance;
+        _obstacleChanceIncrement = _gameProgessionData.ObstacleChanceIncrement;
+        _maxObstacleChance = _gameProgessionData.MaxObstacleChance;
+
         _collectibleManager = ServiceLocator.Get<CollectibleManager>();
         _obstacleManager = ServiceLocator.Get<ObstacleManager>();
 

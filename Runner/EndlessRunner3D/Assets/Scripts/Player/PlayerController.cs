@@ -7,8 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Movement Stats")]
-    [SerializeField] private float _moveSpeed = 8f;
-    [SerializeField] private float _lateralMoveSpeed = 10f;
+    [SerializeField] private PlayerStatsSO _playerStats;
 
     // This variable is used to track the player's horizontal position
     // 0 = center
@@ -20,6 +19,10 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rb;
     private bool _isRunning = false;
+
+    // Movement stats - populated from PlayerStatsSO on init
+    private float _moveSpeed = 8f;
+    private float _lateralMoveSpeed = 10f;
     private float _moveSpeedMultiplier = 1f;
     private float _multiplierIncreaseRate = 0.1f;
 
@@ -31,6 +34,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"{nameof(PlayerController)} Initializing ...");
 
         _rb = GetComponent<Rigidbody>();
+
+        // Set the player's initial stats
+        _moveSpeed = _playerStats.MoveSpeed;
+        _lateralMoveSpeed = _playerStats.LateralMoveSpeed;
+        _moveSpeedMultiplier = _playerStats.MoveSpeedMultiplier;
+        _multiplierIncreaseRate = _playerStats.MultiplierIncreaseRate;
+
         Debug.Log($"{nameof(PlayerController)} Initialized");
     }
 
@@ -99,6 +109,10 @@ public class PlayerController : MonoBehaviour
     public void IncreaseSpeed()
     {
         _moveSpeedMultiplier += _multiplierIncreaseRate;
+        if(_moveSpeedMultiplier > _playerStats.MaxMultiplier)
+        {
+            _moveSpeedMultiplier = _playerStats.MaxMultiplier;
+        }
     }
 
     /// <summary>
