@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// PlayerController class is responsible for controlling the player's movement.
@@ -10,10 +9,6 @@ public class PlayerController : MonoBehaviour
     [Header("Player Movement Stats")]
     [SerializeField] private float _moveSpeed = 8f;
     [SerializeField] private float _lateralMoveSpeed = 10f;
-
-    [Header("UI Buttons for Move Directions")]
-    [SerializeField] private Button _leftButton;
-    [SerializeField] private Button _rightButton;
 
     // This variable is used to track the player's horizontal position
     // 0 = center
@@ -36,9 +31,6 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"{nameof(PlayerController)} Initializing ...");
 
         _rb = GetComponent<Rigidbody>();
-        _leftButton.onClick.AddListener(MoveLeft);
-        _rightButton.onClick.AddListener(MoveRight);
-
         Debug.Log($"{nameof(PlayerController)} Initialized");
     }
 
