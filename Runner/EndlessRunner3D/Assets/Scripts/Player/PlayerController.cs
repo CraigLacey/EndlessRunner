@@ -42,6 +42,25 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"{nameof(PlayerController)} Initialized");
     }
 
+    private void Update()
+    {
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (touch.position.x < Screen.width / 2)
+                {
+                    MoveLeft();
+                }
+                else
+                {
+                    MoveRight();
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Move the player to the left if possible
     /// </summary>
