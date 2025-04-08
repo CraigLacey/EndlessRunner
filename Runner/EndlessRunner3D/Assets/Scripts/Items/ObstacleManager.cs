@@ -88,23 +88,23 @@ public class ObstacleManager : MonoBehaviour
 
         // Load from StreamingAssets. On device use UnityWebRequest to get the file list.
 #if UNITY_ANDROID && !UNITY_EDITOR
-        string dataPath = Path.Combine(Application.streamingAssetsPath, obstacleDataDirectory);
-        using (UnityWebRequest request = UnityWebRequest.Get(dataPath))
+        string indexPath = Path.Combine(Application.streamingAssetsPath, obstacleDataDirectory, "obstacle_manifest.txt");
+        using (UnityWebRequest indexRequest = UnityWebRequest.Get(indexPath))
         {
-            await WebRequestUtils.SendWebRequestAsync(request);
-            if (request.result != UnityWebRequest.Result.Success)
+            await WebRequestUtils.SendWebRequestAsync(indexRequest);
+            if (indexRequest.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"Failed to list obstacle data directory: {request.error}");
+                Debug.LogError($"Failed to list obstacle data directory: {indexRequest.error}");
                 return;
             }
 
-            string fileListString = request.downloadHandler.text;
-            string[] files = fileListString.Split('\n');
-            foreach (string file in files)
+            string[] fileNames = indexRequest.downloadHandler.text.Split('\n');
+            foreach (string fileName in fileNames)
             {
-                if (file.EndsWith(".json"))
+                string trimmedFileName = fileName.Trim();
+                if (!string.IsNullOrEmpty(trimmedFileName) && trimmedFileName.EndsWith(".json"))
                 {
-                    loadTasks.Add(LoadObstacleDataAndInstantiateAsync(Path.Combine(Application.streamingAssetsPath, obstacleDataDirectory, file.Trim()), spawnedObstacles));
+                    loadTasks.Add(LoadObstacleDataAndInstantiateAsync(Path.Combine(Application.streamingAssetsPath, obstacleDataDirectory, trimmedFileName), spawnedObstacles));
                 }
             }
         }
