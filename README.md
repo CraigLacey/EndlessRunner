@@ -75,13 +75,13 @@ Inversion of Control: Implementation of a Service Locator pattern, with strict l
 
 Code: Developed by Craig Lacey
 
-Assets: 
+Assets:
 
-Donut Set https://assetstore.unity.com/packages/3d/props/food/donut-set-282633
+Donut Set
 
-LowPolyMegapolis https://assetstore.unity.com/packages/3d/environments/urban/low-poly-megapolis-195499
+LowPolyMegapolis
 
-Farland Skies https://assetstore.unity.com/packages/2d/textures-materials/sky/farland-skies-low-poly-64604
+Farland Skies
 
 📄 License
 
